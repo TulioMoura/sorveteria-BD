@@ -1,0 +1,19 @@
+{
+  "name": "sorveteria-bd",
+  "version": "1.0.0",
+  "description": "Projeto feito para a disciplina de banco de dados II no sexto semeste do curso de sistemas de informação da UFVJM.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TulioMoura/sorveteria-BD.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TulioMoura/sorveteria-BD/issues"
+  },
+  "homepage": "https://github.com/TulioMoura/sorveteria-BD#readme"
+}
