@@ -1,0 +1,40 @@
+#cada item do pedido contém o produto e sua quantidade(peso), 
+#a confeitaria(peso e descrição),
+#no caso da confeitaria, na forma de array para cada confeitaria 
+#todas as rotas (patch e post) recebem o payload em json,
+
+GET /pedidos retorna um array com todos os pedidos,
+GET /pedidos/{id} retorna um único pedido, no mesmo formato da rota anterior
+POST /pedidos cria um novo pedido,(data valor cliente e itens do pedido)recebendo um array de itens do pedido, e o id do cliente
+PATCH /pedidos atualiza um pedido recebendo todos os seus atributos novamente
+DELETE /pedidos/{id} apaga um pedido
+
+GET /fornecedor retorna todos os fornecedores com nome e cpf
+GET /fornecedor/{id} retorna um único fornecedor , os produtos que o mesmo fornece na forma de array, e os últimos fornecimentos na forma de array
+POST /fornecedor cria um novo fornecedor, com nome,cnpj, telefone e endereço
+PATCH /fornecedor atualiza um fornecedor
+DELETE /fornecedor/{id} deleta um fornecedor
+
+GET /fornecimento retorna todos os fornecimentos de produtos
+GET /fornecimento/{id} retorna detalhes de um único fornecimento
+POST /fornecimento cria um novo fornecimento, recebendo o produto, o fornecedor, a data, quantidade e o valor total
+PATCH /fornecimento edita um fornecimento
+DELETE /fornecimento/{id} deleta um fornecimento
+
+GET /produtos retorna um array com todos os produtos e suas características
+GET /produtos/{id} retorna um único produto e suas características
+POST /produtos cria um novo produto recebendo um nome, preço, sabor, tipo, estoque, e id do fornecedor
+PATCH /produtos atualiza um produto, recebendo seu novo set de características
+DELETE /produtos/{id} apaga o registro de um produto
+
+GET /cliente retorna todos os clientes
+GET /cliente/{id} retorna um único cliente
+POST /cliente cria um cliente, com nome, telefone, endereço 
+PATCH /cliente atualiza um cliente
+DELETE /cliente/{id}
+
+GET /confeitarias retorna todas as confeitarias
+GET /confeitarias/{id} retorna uma única confeitaria
+POST /confeitarias cria uma confeitaria, com nome, valor e estoque
+PATCH /confeitarias atualiza uma confeitaria
+DELETE /confeitaria/{id} deleta uma confeitaria
