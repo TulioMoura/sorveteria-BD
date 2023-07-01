@@ -33,8 +33,3 @@ POST /cliente cria um cliente, com nome, telefone, endereço,cpf
 PATCH /cliente atualiza um cliente
 DELETE /cliente/{cpf}
 
-GET /confeitarias retorna todas as confeitarias
-GET /confeitarias/{id} retorna uma única confeitaria
-POST /confeitarias cria uma confeitaria, com nome, valor e estoque
-PATCH /confeitarias atualiza uma confeitaria
-DELETE /confeitaria/{id} deleta uma confeitaria
