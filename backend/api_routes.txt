@@ -28,10 +28,10 @@ PATCH /produtos atualiza um produto, recebendo seu novo set de características
 DELETE /produtos/{id} apaga o registro de um produto
 
 GET /cliente retorna todos os clientes
-GET /cliente/{id} retorna um único cliente
-POST /cliente cria um cliente, com nome, telefone, endereço 
+GET /cliente/{cpf} retorna um único cliente
+POST /cliente cria um cliente, com nome, telefone, endereço,cpf 
 PATCH /cliente atualiza um cliente
-DELETE /cliente/{id}
+DELETE /cliente/{cpf}
 
 GET /confeitarias retorna todas as confeitarias
 GET /confeitarias/{id} retorna uma única confeitaria
