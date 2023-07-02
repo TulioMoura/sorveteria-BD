@@ -12,7 +12,8 @@ router.post('/', async(req,res)=>{
     let fornecedor;
     try{
        const {nome,cnpj,telefone} =  req.body
-       fornecedor = {nome,cnpj,telefone}            
+       fornecedor = {nome,cnpj,telefone} 
+       console.log(fornecedor)           
         await model_fornecedor.create(fornecedor)
         res.send(200)
     }
@@ -25,11 +26,14 @@ router.post('/', async(req,res)=>{
 
 router.patch('/', async(req,res)=>{
   try{
-     const {cnpj, nome,telefone} =  req.body  
-     if(!model_fornecedor.findByPk(cnpj)){
+     const {cnpj, nome,telefone} =  req.body
+     if(!cnpj){
+        throw new Error()
+     }  
+     else if(!model_fornecedor.findByPk(cnpj)){
       throw new Error()
      }
-     model_fornecedor.update({nome:nome,telefone:telefone},{where:{id:id}})
+     model_fornecedor.update({nome:nome,telefone:telefone},{where:{cnpj:cnpj}})
      res.send(200)
   }
   catch(err){
