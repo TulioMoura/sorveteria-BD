@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/package.json": true,
+    "**/package-lock.json": true,
+    "**/*.cjs": true,
+  }
+}
