@@ -1,7 +1,7 @@
 const sequelize = require("../database/db")
 const {DataTypes} = require("sequelize")
 
-const fornecedor = sequelize.define('Fornecedor',{
+const Fornecedor = sequelize.define('Fornecedor',{
     nome: {
         type:DataTypes.STRING,
         allowNull:false,
@@ -14,5 +14,4 @@ const fornecedor = sequelize.define('Fornecedor',{
         allowNull:false,
 }
 })
-
-module.exports  = fornecedor;
+module.exports  = Fornecedor;

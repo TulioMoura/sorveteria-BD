@@ -9,21 +9,22 @@ POST /pedidos cria um novo pedido,(data valor cliente e itens do pedido)recebend
 PATCH /pedidos atualiza um pedido recebendo todos os seus atributos novamente
 DELETE /pedidos/{id} apaga um pedido
 
-GET /fornecedor retorna todos os fornecedores com nome e cpf
-GET /fornecedor/{id} retorna um único fornecedor , os produtos que o mesmo fornece na forma de array, e os últimos fornecimentos na forma de array
+GET /fornecedor retorna todos os fornecedores com nome, telefone e cpf
+GET /fornecedor/{cnpj} retorna um único fornecedor , os produtos que o mesmo fornece na forma de array, e os últimos fornecimentos na forma de array
 POST /fornecedor cria um novo fornecedor, com nome,cnpj, telefone e endereço
 PATCH /fornecedor atualiza um fornecedor
-DELETE /fornecedor/{id} deleta um fornecedor
+DELETE /fornecedor/{cnpj} deleta um fornecedor
 
 GET /fornecimento retorna todos os fornecimentos de produtos
 GET /fornecimento/{id} retorna detalhes de um único fornecimento
-POST /fornecimento cria um novo fornecimento, recebendo o produto, o fornecedor, a data, quantidade e o valor total
+POST /fornecimento cria um novo fornecimento, recebendo o produto,
+ o fornecedor, a data, quantidade e o valor total
 PATCH /fornecimento edita um fornecimento
 DELETE /fornecimento/{id} deleta um fornecimento
 
 GET /produtos retorna um array com todos os produtos e suas características
 GET /produtos/{id} retorna um único produto e suas características
-POST /produtos cria um novo produto recebendo um nome, preço, sabor, tipo, estoque, e id do fornecedor
+POST /produtos cria um novo produto recebendo um  preço, sabor, tipo, estoque
 PATCH /produtos atualiza um produto, recebendo seu novo set de características
 DELETE /produtos/{id} apaga o registro de um produto
 
