@@ -26,7 +26,7 @@ router.post('/', async(req,res)=>{
 
 router.patch('/', async(req,res)=>{
   try{
-     const {id, nome,endereco,telefone} =  req.body  
+     const {id, nome, endereco, telefone} =  req.body  
      if(!model_cliente.findByPk(id)){
       throw new Error()
      }

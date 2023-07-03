@@ -6,7 +6,7 @@ const Produto = sequelize.define('Produto',{
         allowNull:false,
     },
     tipo: DataTypes.STRING,
-    estoque:{
+    estoque: {
         type:DataTypes.INTEGER,
         defaultValue:0
     },
