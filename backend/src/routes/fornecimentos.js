@@ -67,7 +67,7 @@ router.post('/', async(req,res)=>{
 
 router.patch('/', async(req,res)=>{
   try{
-     const {id,produtoId, cnpjFornecedor,quantidade,valorTotal} =  req.body  
+     const {id,quantidade,valorTotal} =  req.body  
      fornecimento = model_fornecimento.findByPk(id)
      if(!fornecimento){
       throw new Error()
@@ -78,13 +78,11 @@ router.patch('/', async(req,res)=>{
       
      model_fornecimento.update(
         {
-            produtoId:produtoId,
-            cnpjFornecedor:cnpjFornecedor,
             quantidade:quantidade,
             valorTotal:valorTotal},
         {where:{id:id}})
         if(quantidade){
-            produto = model_produto.findByPk(produtoId)
+            produto = model_produto.findByPk(fornecimento.produtoId)
             quant_produto = produto.quantidade - fornecimento.quantidade + quantidade
             model_produto.update({quantidade:quant_produto},{where:{id:produtoId}})
         }
