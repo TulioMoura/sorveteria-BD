@@ -1,4 +1,5 @@
 const express = require("express")
+require("dotenv").config()
 const router = require("./routes/routes.js")
 const errorHandlerMiddleware = require("./middlewares/errorHandlerMiddleware.js")
 const app = express()

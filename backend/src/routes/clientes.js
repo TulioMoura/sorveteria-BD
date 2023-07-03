@@ -4,8 +4,23 @@ const model_cliente = require("../models/cliente");
 const {v4:uuidv4}= require("uuid")
 
 router.get('/',async(req,res)=>{
-    let clientList = await model_cliente.findAll();
-    res.send(clientList)
+  try{
+    const {id} = req.body
+    if(!id){
+      let clientList = await model_cliente.findAll();
+      res.send(clientList)
+    }
+    else{
+        let cliente = await model_cliente.findByPk(id)
+        res.send(cliente)
+    }
+}
+catch(err){
+    console.log(err)
+    res.send(500,"Erro interno do servidor")
+}
+
+    
 })
 
 router.post('/', async(req,res)=>{

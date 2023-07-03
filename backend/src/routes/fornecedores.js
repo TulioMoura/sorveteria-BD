@@ -4,8 +4,23 @@ const model_fornecedor = require("../models/fornecedor");
 const {v4:uuidv4}= require("uuid")
 
 router.get('/',async(req,res)=>{
-    let lista_fornecedores = await model_fornecedor.findAll();
-    res.send(lista_fornecedores)
+
+    try{
+        const {cnpj} = req.body
+        if(!cnpj){
+            let lista_fornecedores = await model_fornecedor.findAll();
+            res.send(lista_fornecedores)
+        }
+        else{
+            let fornecedor = await model_fornecedor.findByPk(cnpj)
+            res.send(fornecedor)
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.send(500,"Erro interno do servidor")
+    }
+    
 })
 
 router.post('/', async(req,res)=>{

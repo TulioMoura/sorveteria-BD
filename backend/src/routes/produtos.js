@@ -4,15 +4,29 @@ const model_produto = require("../models/produto");
 const {v4:uuidv4}= require("uuid")
 
 router.get('/',async(req,res)=>{
-    let lista_produtos = await model_produto.findAll();
-    res.send(lista_produtos)
+
+    try{
+        const {id} = req.body
+        if(!id){
+            let lista_produtos = await model_produto.findAll();
+            res.send(lista_produtos)
+        }
+        else{
+            let produto = await model_produto.findByPk(id)
+            res.send(produto)
+        }
+    }
+    catch(err){
+        console.log(err)
+        res.send(500,"Erro interno do servidor")
+    }
 })
 
 router.post('/', async(req,res)=>{
     let produto;
     try{
        const {sabor,preco,tipo} =  req.body
-       const id = uudiv4()
+       const id = uuidv4()
        produto = {sabor,preco,tipo,id}            
         await model_produto.create(produto)
         res.send(200)

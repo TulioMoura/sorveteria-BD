@@ -14,9 +14,11 @@ GET /fornecedor/{cnpj} retorna um único fornecedor , os produtos que o mesmo fo
 POST /fornecedor cria um novo fornecedor, com nome,cnpj, telefone e endereço
 PATCH /fornecedor atualiza um fornecedor
 DELETE /fornecedor/{cnpj} deleta um fornecedor
-
+ 
 GET /fornecimento retorna todos os fornecimentos de produtos
 GET /fornecimento/{id} retorna detalhes de um único fornecimento
+GET /fornecimento/por/fornecedor/{cnpj fornecedor} retorna os fornecimentos de um fornecedor
+GET /fornecimento/por/produto/{produtoId} retorna os fornecimentos de um único produto
 POST /fornecimento cria um novo fornecimento, recebendo o produto,
  o fornecedor, a data, quantidade e o valor total
 PATCH /fornecimento edita um fornecimento

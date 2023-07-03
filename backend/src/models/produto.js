@@ -10,7 +10,7 @@ const Produto = sequelize.define('Produto',{
         type:DataTypes.INTEGER,
         defaultValue:0
     },
-    preço : DataTypes.FLOAT,
+    preco : DataTypes.FLOAT,
     id: {
         type: DataTypes.STRING,
         primaryKey:true,
