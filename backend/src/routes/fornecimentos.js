@@ -4,7 +4,8 @@ const model_fornecimento = require("../models/fornecimento");
 const model_produto = require("../models/produto")
 const model_fornecedor = require("../models/fornecedor")
 
-const {v4:uuidv4}= require("uuid")
+const {v4:uuidv4}= require("uuid");
+const fornecimento = require("../models/fornecimento");
 
 router.get('/',async(req,res)=>{
     try{
@@ -48,7 +49,13 @@ router.post('/', async(req,res)=>{
     try{
        const {produtoId,cnpjFornecedor,quantidade,valorTotal} =  req.body
       fornecimento = {produtoId,cnpjFornecedor,quantidade,valorTotal}
+      if(quantidade<1){
+        throw new Error()
+      }
         await model_fornecimento.create(fornecimento)
+        produto = await model_produto.findByPk(produtoId)
+
+        await model_produto.update({quantidade:produto.quantidade},{where:{id:produtoId}})
         res.send(200)
     }
     catch(err){
@@ -61,9 +68,14 @@ router.post('/', async(req,res)=>{
 router.patch('/', async(req,res)=>{
   try{
      const {id,produtoId, cnpjFornecedor,quantidade,valorTotal} =  req.body  
-     if(!model_fornecimento.findByPk(id)){
+     fornecimento = model_fornecimento.findByPk(id)
+     if(!fornecimento){
       throw new Error()
      }
+     if(quantidade<1){
+        throw new Error()
+      }
+      
      model_fornecimento.update(
         {
             produtoId:produtoId,
@@ -71,6 +83,12 @@ router.patch('/', async(req,res)=>{
             quantidade:quantidade,
             valorTotal:valorTotal},
         {where:{id:id}})
+        if(quantidade){
+            produto = model_produto.findByPk(produtoId)
+            quant_produto = produto.quantidade - fornecimento.quantidade + quantidade
+            model_produto.update({quantidade:quant_produto},{where:{id:produtoId}})
+        }
+        
     res.send(200)
   }
   catch(err){
