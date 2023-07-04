@@ -4,17 +4,18 @@ export default {
     "./src/components/**/*.{tsx, jsx}",
     "./src/components/*.{tsx, jsx}",
     "./src/pages/**/*.{tsx, jsx}",
-    "./src/pages/*.{tsx, jsx}"
+    "./src/pages/*.{tsx, jsx}",
+    "./src/App.tsx",
   ],
   theme: {
     extend: {
-      colors:{
-        "color-primary": "#F26699",
-        "color-secondary": "#D96A88",
-        "color-terciary": "#96D9CC"
-      }
+      colors: {
+        "rv-primary": "#B4F0E8",
+        "rv-secondary": "#FFA6B9",
+        "rv-pale": "#FEE9E0",
+        "rv-pale-dark": "#F0C6B4"
+      },
     },
   },
   plugins: [],
-}
-
+};

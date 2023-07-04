@@ -1,21 +1,13 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home"
-import Navbar from "./components/Navbar";
-
-const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: <Home />
-  },
-
-]);
+import Navbar from "./components/global/Navbar";
+import AppRouter from "./Routes";
 
 export default function App() {
   return (
     <>
-      <Navbar />
-      <RouterProvider router={router} />
+      <div className="min-h-screen">
+        <Navbar />
+        <AppRouter />
+      </div>
     </>
   );
-};
-
+}
