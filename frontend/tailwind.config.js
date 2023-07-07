@@ -15,6 +15,10 @@ export default {
         "rv-pale": "#FEE9E0",
         "rv-pale-dark": "#F0C6B4"
       },
+      fontFamily:{
+        "quicksand": ["Quicksand", "sans"],
+        "DancingScript": ['Dancing Script', "sans"],
+      }
     },
   },
   plugins: [],
