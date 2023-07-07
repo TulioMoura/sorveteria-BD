@@ -17,6 +17,10 @@
   @apply bg-rv-secondary hover:bg-rv-pale text-stone-700 font-bold py-1 px-2 border-b-4 border-stone-700 rounded mx-2 my-1 font-quicksand;
 }
 
+.customDangerButton {
+  @apply bg-rose-400 hover:bg-rv-pale text-stone-700 font-bold py-1 px-2 border-b-4 border-stone-700 rounded mx-2 my-1 font-quicksand;
+}
+
 .content-container {
   @apply mx-auto 2xl:max-w-[1320px] lg:max-w-4xl md:max-w-3xl sm:max-w-2xl;
 }
