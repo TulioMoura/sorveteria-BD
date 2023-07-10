@@ -13,6 +13,10 @@
   --color-5: #b4f0e8;
 }
 
+*{
+  @apply text-xs min-[400px]:text-base;
+}
+
 .customButton {
   @apply bg-rv-secondary hover:bg-rv-pale text-stone-700 font-bold py-1 px-2 border-b-4 border-stone-700 rounded mx-2 my-1 font-quicksand;
 }
