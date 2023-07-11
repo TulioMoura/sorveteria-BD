@@ -18,7 +18,7 @@ export default {
       fontFamily:{
         "quicksand": ["Quicksand", "sans"],
         "DancingScript": ['Dancing Script', "sans"],
-      }
+      },
     },
   },
   plugins: [],

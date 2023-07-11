@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --color-1: #d19884;
   --color-2: #fee9e0;
