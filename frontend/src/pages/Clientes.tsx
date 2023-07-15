@@ -23,6 +23,9 @@ export default function Clientes() {
     .catch(err => console.error(err));
     
   }, clientes);
+
+  clientes = useItem;
+
   
 
   return (
@@ -33,7 +36,7 @@ export default function Clientes() {
           <thead className="border-b-2 border-stone-500">
             <tr>
               <th className="font-quicksand text-left">Nome</th>
-              <th className="font-quicksand text-left">CPF</th>
+              <th className="font-quicksand text-left">Telefone</th>
               <th className="font-quicksand"></th>
             </tr>
           </thead>
