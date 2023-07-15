@@ -1,9 +1,9 @@
 const sequelize = require("../database/db")
 const {DataTypes} = require("sequelize")
-const Fornecedor = require("./fornecedor.js")
+const Pedido = require("./pedido.js")
 const Produto = require("./produto.js")
 
-const fornecimento = sequelize.define('Fornecimento',{
+const itemPedido = sequelize.define('itemPedido',{
     produtoId:{
         type:DataTypes.STRING,
         references:{
@@ -13,27 +13,27 @@ const fornecimento = sequelize.define('Fornecimento',{
         allowNull:false
     },
 
-    cnpjFornecedor:{
+    pedidoId:{
         type: DataTypes.STRING,
         references:{
-            model: Fornecedor,
-            key:'cnpj'
+            model: Pedido,
+            key:'id'
         },
         allowNull:false
     },
     quantidade:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.FLOAT,
         defaultValue:1,
         allowNull:false
     },
-    valorTotal:{
+    valor:{
         type:DataTypes.FLOAT,
         allowNull:false
     }
 }
 )
 
-fornecimento.belongsTo(Produto,{as:'Produto',foreignKey:'produtoId'})
-fornecimento.belongsTo(Fornecedor,{as:'Fornecedor',foreignKey:'cnpjFornecedor'})
+itemPedido.belongsTo(Produto,{as:'Produto',foreignKey:'produtoId'})
+itemPedido.belongsTo(Pedido,{as:'Pedido',foreignKey:'pedidoId'})
 
-module.exports  = fornecimento;
+module.exports  = itemPedido;

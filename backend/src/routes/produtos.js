@@ -25,9 +25,9 @@ router.get('/',async(req,res)=>{
 router.post('/', async(req,res)=>{
     let produto;
     try{
-       const {sabor,preco,tipo} =  req.body
+       const {sabor,preco,tipo,lucro} =  req.body
        const id = uuidv4()
-       produto = {sabor,preco,tipo,id}            
+       produto = {sabor,preco,tipo,id,lucro}            
         await model_produto.create(produto)
         res.send(200)
     }
@@ -40,11 +40,11 @@ router.post('/', async(req,res)=>{
 
 router.patch('/', async(req,res)=>{
   try{
-     const {sabor,preco,tipo,id}  =  req.body  
+     const {sabor,preco,tipo,id,lucro}  =  req.body  
      if(!model_produto.findByPk(id)){
       throw new Error()
      }
-     model_produto.update({sabor:sabor,preco:preco,tipo:tipo},{where:{id:id}})
+     model_produto.update({sabor:sabor,preco:preco,tipo:tipo,lucro:lucro},{where:{id:id}})
      res.send(200)
   }
   catch(err){

@@ -5,7 +5,9 @@
 
 GET /pedidos retorna um array com todos os pedidos,
 GET /pedidos/{id} retorna um único pedido, no mesmo formato da rota anterior
-POST /pedidos cria um novo pedido,(data valor cliente e itens do pedido)recebendo um array de itens do pedido, e o id do cliente
+POST /pedidos cria um novo pedido,(data valor cliente e itens do pedido)
+    recebendo um array de itens do pedido, e o id do cliente
+
 PATCH /pedidos atualiza um pedido recebendo todos os seus atributos novamente
 DELETE /pedidos/{id} apaga um pedido
 
