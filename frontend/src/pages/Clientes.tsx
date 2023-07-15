@@ -1,20 +1,30 @@
 import TableItem from "../components/global/TableItem";
+import { useEffect, useState } from "react"
 
-
-const clientes = [
-  {
-    nome: "Raul",
-    cpf: "38294798327",
-    editar: "#",
-    delete: "#",
-    id: 1
-  }
-]
-
-
-
+interface cliente {
+  nome: string,
+  telefone: string,
+  endereco: string,
+  id: string,
+  createdAt: string,
+  updatedAt: string
+}
 
 export default function Clientes() {
+
+  let clientes: cliente[] = [];
+  const [useItem, setItem] = useState(clientes);
+  
+  useEffect(() => {
+    
+    fetch('http://127.0.0.1:4000/clientes')
+    .then(response => response.json())
+    .then(response => setItem(response))
+    .catch(err => console.error(err));
+    
+  }, clientes);
+  
+
   return (
     <section className="container-fluid header bg-rv-pale min-h-screen ">
       <h1 className="font-black font-DancingScript text-3xl text-center p-5">Clientes</h1>
@@ -28,11 +38,7 @@ export default function Clientes() {
             </tr>
           </thead>
           <tbody className="divide-y divide-stone-500 divide-dotted">
-            <TableItem title="Teste" cpf="72635154122" editar="#" delete="#" />
-            <TableItem title="Teste" cpf="72635145412" editar="#" delete="#" />
-            <TableItem title="Teste com mais palavras" cpf="72635641412" editar="#" delete="#" />
-            <TableItem title="Teste" cpf="72635155412" editar="#" delete="#" />
-            <TableItem title="Teste" cpf="72635812412" editar="#" delete="#" />
+            {useItem.map((c: cliente) => <TableItem title={c.nome} cpf={c.telefone} key={c.id} />)}
           </tbody>
         </table>
       </div>

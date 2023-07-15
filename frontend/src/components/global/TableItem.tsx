@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 
 interface listItemProps {
@@ -8,16 +8,19 @@ interface listItemProps {
   delete?: string
 }
 
-function HandleDelete(){
-  return 
-}
+
 
 export default function TableItem(props: listItemProps) {
 
-  const [toEdit, setToEdit] = useState(false);
-  const [toDelete, setDelete] = useState(false);
+  function HandleDelete() {
+    return
+  }
 
-  
+
+
+  const [toEdit, setToEdit] = useState(false);
+
+
 
   return (
     <tr>
