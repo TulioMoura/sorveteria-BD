@@ -1,25 +1,29 @@
 import { useState } from "react";
 
-
 interface listItemProps {
-  title: string,
-  cpf?: string,
-  editar?: string,
-  delete?: string
+  title: string;
+  id: string;
+  cpf?: string;
+  editar?: string;
+  delete?: string;
 }
-
-
 
 export default function TableItem(props: listItemProps) {
 
-  function HandleDelete() {
-    return
-  }
-
-
-
   const [toEdit, setToEdit] = useState(false);
 
+  function HandleDelete() {
+    return;
+  }
+
+  function HandleSave(id: string) {
+
+    setToEdit(false);
+    
+    // TODO: Implement PATCH request to API
+
+    return;
+  }
 
 
   return (
@@ -31,9 +35,21 @@ export default function TableItem(props: listItemProps) {
         {!toEdit ? props.cpf : <input type="text" value={props.cpf} />}
       </td>
       <td className="flex justify-end">
-        <button className="customButton" onClick={() => setToEdit(true)} >Editar</button>
-        <button className="customButton" onClick={HandleDelete} >Delete</button>
+
+        {toEdit ? (
+          <button className="customButton" onClick={() => HandleSave(props.id)}>
+            Salvar
+          </button>
+        ) : (
+          <button className="customButton" onClick={() => setToEdit(true)}>
+            Editar
+          </button>
+        )}
+
+        <button className="customButton" onClick={HandleDelete}>
+          Delete
+        </button>
       </td>
     </tr>
-  )
-};
+  );
+}

@@ -26,8 +26,6 @@ export default function Clientes() {
 
   clientes = useItem;
 
-  
-
   return (
     <section className="container-fluid header bg-rv-pale min-h-screen ">
       <h1 className="font-black font-DancingScript text-3xl text-center p-5">Clientes</h1>
@@ -41,7 +39,8 @@ export default function Clientes() {
             </tr>
           </thead>
           <tbody className="divide-y divide-stone-500 divide-dotted">
-            {useItem.map((c: cliente) => <TableItem title={c.nome} cpf={c.telefone} key={c.id} />)}
+            {useItem.map((c: cliente) => <TableItem title={c.nome} cpf={c.telefone} key={c.id} id={c.id} />)}
+            {!useItem.length ? "Não há clientes Cadastrados" : <></>}
           </tbody>
         </table>
       </div>
