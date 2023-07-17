@@ -97,7 +97,7 @@ router.delete('/', async(req,res)=>{
      let fornecimento = await model_fornecimento.findByPk(id);
      
      let produto = await model_produto.findByPk(fornecimento.produtoId)
-     await model_produto.update({estoque:produto.estoque - fornecimento.quantidade},{where:{id:fornecimento.produtoId}})
+     await model_produto.update({estoque:(produto.estoque - fornecimento.quantidade)},{where:{id:produto.id}})
     await model_fornecimento.destroy({where:{id:id}})
     res.send(200)
   }
