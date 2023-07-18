@@ -26,7 +26,10 @@ router.get('/',async(req,res)=>{
 router.post('/', async(req,res)=>{
     let fornecedor;
     try{
-       const {nome,cnpj,telefone} =  req.body
+        const {nome,cnpj,telefone} =  req.body
+        if(!cnpj || !nome){
+            throw new Error();
+        }
        let fornecedor = {nome,cnpj,telefone}   
         await model_fornecedor.create(fornecedor)
         fornecedor = await model_fornecedor.findByPk(cnpj)
