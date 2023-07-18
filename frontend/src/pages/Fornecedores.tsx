@@ -76,21 +76,31 @@ export default function Fornecedores() {
       .catch(err => console.error(err));
   }
 
-  function HandleCreate(fProto:fornecedorProto){
-    console.log(fProto)
-    fetch('http://127.0.0.1:4000/fornecedores',
-      {
-        method: "POST",
-        body: JSON.stringify(fProto),
-        headers: { "Content-Type": "application/json" }
-      }
-    ).then(response => response.json())
-      .then(itemFornecedor => {
-        setItem([...useItem,itemFornecedor])
-      })
-      .catch(err => console.error(err));
-  }
+  async function HandleCreate(fProto: fornecedorProto): Promise<boolean> {
+    let created = false;
+    try {
+      const req = await fetch('http://127.0.0.1:4000/fornecedores',
+        {
+          method: "POST",
+          body: JSON.stringify(fProto),
+          headers: { "Content-Type": "application/json" }
+        }
+      )
+      const itemFornecedor = await req.json()
+      setItem([...useItem, itemFornecedor])
+      created = (!!itemFornecedor)
 
+
+    }
+    catch (err) {
+      console.error(err)
+      created = false
+    }
+    
+    return created;
+
+
+  }
   fornecedores = useItem;
 
   return (
@@ -152,9 +162,20 @@ export default function Fornecedores() {
                 </td>
                 <td className="flex justify-end">
                   
-                    <button className="customButton" onClick={() =>{
-                       HandleCreate(useNovoFornecedor) 
-                       setNovoFornecedor({nome:"",cnpj:"",telefone:""})
+                    <button className="customButton" onClick={async() =>{
+                       const created  = await HandleCreate (useNovoFornecedor) 
+
+                       if(created){
+                        setNovoFornecedor({nome:"",cnpj:"",telefone:""})
+                        let inputNome = (document.getElementById(`NomeFornecedor`) as HTMLInputElement);
+                        let inputCNPJ = (document.getElementById(`CNPJFornecedor`) as HTMLInputElement);
+                        let inputTelefone = (document.getElementById(`TelefoneFornecedor`) as HTMLInputElement);
+
+                        inputNome.value = "";
+                        inputCNPJ.value = "";
+                        inputTelefone.value = "";
+                       }
+                       
                        } }>
                        Criar!
                     </button>

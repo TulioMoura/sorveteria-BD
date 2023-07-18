@@ -99,7 +99,6 @@ export default function Clientes() {
       console.error(err)
       created = false
     }
-    console.log(created)
     return created;
 
 
@@ -167,9 +166,7 @@ export default function Clientes() {
               <td className="flex justify-end">
                 <button className="customButton" onClick={async () => {
                   const created = await HandleCreate(useNovoCliente)
-                  console.log(created)
                   if(created){
-                    console.log("teste")
                     setNovoCliente({ nome: "", endereco: "", telefone: "" })
                     let inputNome = (document.getElementById(`NomeCliente`) as HTMLInputElement);
                     let inputTelefone = (document.getElementById(`TelefoneCliente`) as HTMLInputElement);
