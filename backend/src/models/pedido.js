@@ -1,5 +1,6 @@
 const sequelize = require("../database/db")
 const {DataTypes} = require("sequelize")
+const cliente = require("./cliente.js")
 
 const pedido = sequelize.define('Pedido',{
     valor_total:{
@@ -18,4 +19,5 @@ const pedido = sequelize.define('Pedido',{
     }
 })
 
+pedido.belongsTo(cliente, {as:'cliente',foreignKey:"idCliente"})
 module.exports  = pedido;

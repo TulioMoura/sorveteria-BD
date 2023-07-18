@@ -26,12 +26,15 @@ router.get('/',async(req,res)=>{
 router.post('/', async(req,res)=>{
     let produto;
     try{
-       const {sabor,preco,tipo,lucro} =  req.body
+       let {sabor,preco,tipo,lucro} =  req.body
        const id = uuidv4()
        if(lucro == null){
+        preco = preco.toString()
         produto = {sabor,preco,tipo,id} 
        }
        else{
+        lucro = lucro.toString()
+        preco = preco.toString()
         produto = {sabor,preco,tipo,id,lucro} 
        }
         
