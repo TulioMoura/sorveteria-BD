@@ -27,10 +27,10 @@ router.post('/', async(req,res)=>{
     let fornecedor;
     try{
        const {nome,cnpj,telefone} =  req.body
-       fornecedor = {nome,cnpj,telefone} 
-       console.log(fornecedor)           
+       let fornecedor = {nome,cnpj,telefone}   
         await model_fornecedor.create(fornecedor)
-        res.send(200)
+        fornecedor = await model_fornecedor.findByPk(cnpj)
+        res.status(200).send(fornecedor)
     }
     catch(err){
         console.log(err)
@@ -42,14 +42,16 @@ router.post('/', async(req,res)=>{
 router.patch('/', async(req,res)=>{
   try{
      const {cnpj, nome,telefone} =  req.body
+     let fornecedor = await model_fornecedor.findByPk(cnpj)
      if(!cnpj){
         throw new Error()
      }  
-     else if(!model_fornecedor.findByPk(cnpj)){
+     else if(!fornecedor){
       throw new Error()
      }
-     model_fornecedor.update({nome:nome,telefone:telefone},{where:{cnpj:cnpj}})
-     res.send(200)
+     await model_fornecedor.update({nome:nome,telefone:telefone},{where:{cnpj:cnpj}})
+     fornecedor = await model_fornecedor.findByPk(cnpj)
+     res.status(200).send(fornecedor)
   }
   catch(err){
       console.log(err)
@@ -60,9 +62,16 @@ router.patch('/', async(req,res)=>{
 
 router.delete('/', async(req,res)=>{
   try{
-     const {cnpj} =  req.body  
+     const {cnpj} =  req.body
+     let fornecedor = await model_fornecedor.findByPk(cnpj)
+     if(!cnpj){
+        throw new Error();
+     }
+     else if(!fornecedor){
+        throw new Error()
+     }
      await model_fornecedor.destroy({where:{cnpj:cnpj}})
-    res.send(200)
+    res.status(200).send(fornecedor)
   }
   catch(err){
       console.log(err)

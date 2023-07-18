@@ -43,11 +43,15 @@ router.post('/', async(req,res)=>{
 router.patch('/', async(req,res)=>{
   try{
      const {id, nome, endereco, telefone} =  req.body  
-     if(! await model_cliente.findByPk(id)){
+     let cliente = await model_cliente.findByPk(id)
+     if(!id){
+      throw new Error()
+     }
+     else if(!cliente ){
       throw new Error()
      }
      await model_cliente.update({nome:nome,endereco:endereco,telefone:telefone},{where:{id:id}})
-     let cliente = await model_cliente.findByPk(id);
+     cliente = await model_cliente.findByPk(id)
      res.status(200).send(cliente)
     
   }
@@ -62,7 +66,10 @@ router.delete('/', async(req,res)=>{
   try{
      const {id} =  req.body  
      let cliente = await model_cliente.findByPk(id)
-    if(!cliente){
+     if(!id){
+      throw new Error();
+     }
+    else if(!cliente){
       throw new Error();
     }
 
