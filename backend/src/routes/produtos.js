@@ -34,8 +34,9 @@ router.post('/', async(req,res)=>{
        else{
         produto = {sabor,preco,tipo,id,lucro} 
        }
-        produto = await model_produto.findByPk(id)
+        
         await model_produto.create(produto)
+        produto = await model_produto.findByPk(id)
         res.status(200).send(produto)
     }
     catch(err){

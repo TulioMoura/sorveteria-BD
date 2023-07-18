@@ -21,11 +21,14 @@ export default function Navbar() {
             <a href="/fornecedores" className="customButton">
               Fornecedores
             </a>
+            <a href="/fornecimentos" className="customButton">
+              Fornecimentos
+            </a>
             <a href="/pedidos" className="customButton">
               Pedidos
             </a>
             <a href="/produtos" className="customButton">
-              produtos
+              Produtos
             </a>
           </div>
         </div>
