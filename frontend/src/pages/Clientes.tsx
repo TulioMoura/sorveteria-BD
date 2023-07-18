@@ -56,6 +56,22 @@ export default function Clientes() {
       .catch(err => console.error(err));
   }
 
+  function HandleDelete(c:cliente){
+    fetch('http://127.0.0.1:4000/clientes',
+      {
+        method: "DELETE",
+        body: JSON.stringify({id:c.id}),
+        headers: { "Content-Type": "application/json" }
+      }
+    ).then(response => response.json())
+      .then(itemCliente => {
+        let listaClientes: cliente[] = useItem;
+        listaClientes = listaClientes.filter((item:cliente) => itemCliente.id !== item.id)
+        setItem(listaClientes)
+      })
+      .catch(err => console.error(err));
+  }
+
 
   clientes = useItem;
 
@@ -90,7 +106,7 @@ export default function Clientes() {
                       Editar
                     </button>
                   )}
-                  <button className="customButton" onClick={() => { }}>
+                  <button className="customButton" onClick={() => HandleDelete(c)}>
                     Delete
                   </button>
                 </td>
