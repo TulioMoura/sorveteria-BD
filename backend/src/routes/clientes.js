@@ -30,7 +30,8 @@ router.post('/', async(req,res)=>{
        let id = uuidv4()
        cliente = {nome,endereco,telefone,id}            
         await model_cliente.create(cliente)
-        res.send(200)
+        cliente = await model_cliente.findByPk(id);
+        res.status(200).json(cliente)
     }
     catch(err){
         console.log(err)
@@ -42,11 +43,13 @@ router.post('/', async(req,res)=>{
 router.patch('/', async(req,res)=>{
   try{
      const {id, nome, endereco, telefone} =  req.body  
-     if(!model_cliente.findByPk(id)){
+     if(! await model_cliente.findByPk(id)){
       throw new Error()
      }
-     model_cliente.update({nome:nome,endereco:endereco,telefone:telefone},{where:{id:id}})
-    res.send(200)
+     await model_cliente.update({nome:nome,endereco:endereco,telefone:telefone},{where:{id:id}})
+     let cliente = await model_cliente.findByPk(id);
+     res.status(200).send(cliente)
+    
   }
   catch(err){
       console.log(err)
@@ -58,8 +61,13 @@ router.patch('/', async(req,res)=>{
 router.delete('/', async(req,res)=>{
   try{
      const {id} =  req.body  
-     await model_cliente.destroy({where:{id:id}})
-    res.send(200)
+     let cliente = await model_cliente.findByPk(id)
+    if(!cliente){
+      throw new Error();
+    }
+
+    await model_cliente.destroy({where:{id:id}})
+    res.status(200).send(cliente)
   }
   catch(err){
       console.log(err)
