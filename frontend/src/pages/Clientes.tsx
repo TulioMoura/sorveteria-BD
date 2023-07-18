@@ -8,13 +8,12 @@ interface cliente {
   createdAt: string,
   updatedAt: string
 }
-
 export default function Clientes() {
 
   let clientes: cliente[] = [];
   const [useItem, setItem] = useState(clientes);
   const [useEdit, setEdit] = useState(false);
-
+  const [useNovoCliente,setNovoCliente] = useState<cliente>()
   useEffect(() => {
 
     fetch('http://127.0.0.1:4000/clientes')
@@ -117,6 +116,25 @@ export default function Clientes() {
                 </td>
               </tr>
             )}
+            <tr>
+            <td className="font-quicksand py-2 m-1">
+                  {<input id={"NomeNovoCliente"} type="text" placeholder="Nome" />}
+                </td>
+                <td className="font-quicksand py-2 m-1">
+                  {<input id={"TelefoneCliente"} type="text" placeholder="Telefone" />}
+                </td>
+                <td className="font-quicksand py-2 m-1">
+                  {<input id={"EnderecoCliente"} type="text" placeholder="Endereço"/>}
+                </td>
+                <td className="flex justify-end">
+                  
+                    <button className="customButton" onClick={() => /*HandleCreate(c)*/ {}}>
+                       Criar!
+                    </button>
+
+                  
+                </td>
+            </tr>
           </tbody>
         </table>
       </div>
