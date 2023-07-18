@@ -8,12 +8,19 @@ interface cliente {
   createdAt: string,
   updatedAt: string
 }
+
+interface clienteProto{
+  nome:string,
+  telefone:string,
+  endereco:string
+}
+
 export default function Clientes() {
 
   let clientes: cliente[] = [];
   const [useItem, setItem] = useState(clientes);
   const [useEdit, setEdit] = useState(false);
-  const [useNovoCliente,setNovoCliente] = useState<cliente>()
+  const [useNovoCliente,setNovoCliente] = useState<clienteProto>({nome:"",endereco:"",telefone:""})
   useEffect(() => {
 
     fetch('http://127.0.0.1:4000/clientes')
@@ -72,6 +79,19 @@ export default function Clientes() {
       .catch(err => console.error(err));
   }
 
+  function HandleCreate(cProto:clienteProto){
+    fetch('http://127.0.0.1:4000/clientes',
+      {
+        method: "POST",
+        body: JSON.stringify(cProto),
+        headers: { "Content-Type": "application/json" }
+      }
+    ).then(response => response.json())
+      .then(itemCliente => {
+        setItem([...useItem,itemCliente])
+      })
+      .catch(err => console.error(err));
+  }
 
   clientes = useItem;
 
@@ -118,17 +138,26 @@ export default function Clientes() {
             )}
             <tr>
             <td className="font-quicksand py-2 m-1">
-                  {<input id={"NomeNovoCliente"} type="text" placeholder="Nome" />}
+                  {<input id={"NomeNovoCliente"} type="text" placeholder="Nome" onChange={(e)=>{
+                    setNovoCliente({nome:e.target.value, endereco:useNovoCliente.endereco,telefone: useNovoCliente.telefone})
+                  }} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {<input id={"TelefoneCliente"} type="text" placeholder="Telefone" />}
+                  {<input id={"TelefoneCliente"} type="text" placeholder="Telefone" onChange={(e)=>{
+                    setNovoCliente({nome:useNovoCliente.nome, endereco:useNovoCliente.endereco,telefone: e.target.value})
+                  }}/>}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {<input id={"EnderecoCliente"} type="text" placeholder="Endereço"/>}
+                  {<input id={"EnderecoCliente"} type="text" placeholder="Endereço" onChange={(e)=>{
+                    setNovoCliente({nome:useNovoCliente.nome, endereco:e.target.value ,telefone: useNovoCliente.telefone})
+                  }}/>}
                 </td>
                 <td className="flex justify-end">
                   
-                    <button className="customButton" onClick={() => /*HandleCreate(c)*/ {}}>
+                    <button className="customButton" onClick={() =>{
+                       HandleCreate(useNovoCliente) 
+                       setNovoCliente({nome:"",endereco:"",telefone:""})
+                       } }>
                        Criar!
                     </button>
 

@@ -27,6 +27,10 @@ router.post('/', async(req,res)=>{
     let cliente;
     try{
        const {nome,endereco,telefone} =  req.body
+      if(!nome){
+        throw new Error();
+      }
+
        let id = uuidv4()
        cliente = {nome,endereco,telefone,id}            
         await model_cliente.create(cliente)
