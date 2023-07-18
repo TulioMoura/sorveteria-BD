@@ -28,6 +28,7 @@ export default function Clientes() {
   function HandleSave(c: cliente) {
     const newNome = (document.getElementById(`${c.id}-title`) as HTMLInputElement).value;
     const newTel = (document.getElementById(`${c.id}-telefone`) as HTMLInputElement).value;
+    const newAddr = (document.getElementById(`${c.id}-endereco`)as HTMLInputElement).value;
     
 
     setEdit(false);
@@ -35,7 +36,7 @@ export default function Clientes() {
     const newData = {
       nome: newNome,
       telefone: newTel,
-      endereco: c.endereco,
+      endereco: newAddr,
       id: c.id
     }
 
@@ -84,6 +85,7 @@ export default function Clientes() {
             <tr>
               <th className="font-quicksand text-left">Nome</th>
               <th className="font-quicksand text-left">Telefone</th>
+              <th className="font-quicksand text-left">Endereço</th>
               <th className="font-quicksand"></th>
             </tr>
           </thead>
@@ -95,6 +97,9 @@ export default function Clientes() {
                 </td>
                 <td className="font-quicksand py-2 m-1">
                   {!useEdit ? c.telefone : <input id={c.id + "-telefone"} type="text" defaultValue={c.telefone} />}
+                </td>
+                <td className="font-quicksand py-2 m-1">
+                  {!useEdit ? c.endereco : <input id={c.id + "-endereco"} type="text" defaultValue={c.endereco} />}
                 </td>
                 <td className="flex justify-end">
                   {useEdit ? (
@@ -114,8 +119,8 @@ export default function Clientes() {
             )}
           </tbody>
         </table>
-        {!useItem.length ? "Não há clientes Cadastrados" : <></>}
       </div>
+      {!useItem.length ? <h4 className=" text-2xl text-center p-5">Não há clientes Cadastrados </h4>: <></>}
     </section>
   )
 };
