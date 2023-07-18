@@ -79,18 +79,30 @@ export default function Clientes() {
       .catch(err => console.error(err));
   }
 
-  function HandleCreate(cProto: clienteProto) {
-    fetch('http://127.0.0.1:4000/clientes',
-      {
-        method: "POST",
-        body: JSON.stringify(cProto),
-        headers: { "Content-Type": "application/json" }
-      }
-    ).then(response => response.json())
-      .then(itemCliente => {
-        setItem([...useItem, itemCliente])
-      })
-      .catch(err => console.error(err));
+  async function HandleCreate(cProto: clienteProto): Promise<boolean> {
+    let created = false;
+    try {
+      const req = await fetch('http://127.0.0.1:4000/clientes',
+        {
+          method: "POST",
+          body: JSON.stringify(cProto),
+          headers: { "Content-Type": "application/json" }
+        }
+      )
+      const itemCliente = await req.json()
+      setItem([...useItem, itemCliente])
+      created = (!!itemCliente)
+
+
+    }
+    catch (err) {
+      console.error(err)
+      created = false
+    }
+    console.log(created)
+    return created;
+
+
   }
 
   clientes = useItem;
@@ -138,7 +150,7 @@ export default function Clientes() {
             )}
             <tr>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"NomeNovoCliente"} className="px-2 rounded" type="text" placeholder="Nome" onChange={(e) => {
+                {<input id={"NomeCliente"} className="px-2 rounded" type="text" placeholder="Nome" onChange={(e) => {
                   setNovoCliente({ nome: e.target.value, endereco: useNovoCliente.endereco, telefone: useNovoCliente.telefone })
                 }} />}
               </td>
@@ -153,9 +165,20 @@ export default function Clientes() {
                 }} />}
               </td>
               <td className="flex justify-end">
-                <button className="customButton" onClick={() => {
-                  HandleCreate(useNovoCliente)
-                  setNovoCliente({ nome: "", endereco: "", telefone: "" })
+                <button className="customButton" onClick={async () => {
+                  const created = await HandleCreate(useNovoCliente)
+                  console.log(created)
+                  if(created){
+                    console.log("teste")
+                    setNovoCliente({ nome: "", endereco: "", telefone: "" })
+                    let inputNome = (document.getElementById(`NomeCliente`) as HTMLInputElement);
+                    let inputTelefone = (document.getElementById(`TelefoneCliente`) as HTMLInputElement);
+                    let inputEndereco = (document.getElementById(`EnderecoCliente`) as HTMLInputElement);
+
+                    inputNome.value  = "";
+                    inputEndereco.value = "";
+                    inputTelefone.value = "";
+                  }
                 }}>
                   Criar!
                 </button>
