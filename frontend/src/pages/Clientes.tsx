@@ -28,7 +28,7 @@ export default function Clientes() {
   function HandleSave(c: cliente) {
     const newNome = (document.getElementById(`${c.id}-title`) as HTMLInputElement).value;
     const newTel = (document.getElementById(`${c.id}-telefone`) as HTMLInputElement).value;
-    console.log(newTel);
+    
 
     setEdit(false);
 
@@ -45,10 +45,14 @@ export default function Clientes() {
         body: JSON.stringify(newData),
         headers: { "Content-Type": "application/json" }
       }
-    )
-      .then(
-        //TODO
-      )
+    ).then(response => response.json())
+      .then(itemCliente => {
+        let listaClientes: cliente[] = useItem;
+        listaClientes = listaClientes.map((item:cliente) => {
+          return item.id === itemCliente.id ? itemCliente : item;
+        })
+        setItem(listaClientes)
+      })
       .catch(err => console.error(err));
   }
 
