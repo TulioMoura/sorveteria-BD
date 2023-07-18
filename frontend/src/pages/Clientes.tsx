@@ -184,7 +184,7 @@ export default function Clientes() {
           </tbody>
         </table>
       </div>
-        {!useItem.length ? <p className="font-quicksand text-xl text-center my-3">Não há clientes Cadastrados </p> : <></>}
+        {!useItem.length ? <p className="font-quicksand text-xl text-center my-3">Não há clientes cadastrados </p> : <></>}
     </section>
   )
 };

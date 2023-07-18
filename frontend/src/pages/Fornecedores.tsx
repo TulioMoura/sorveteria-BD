@@ -186,7 +186,7 @@ export default function Fornecedores() {
           </tbody>
         </table>
       </div>
-      {!useItem.length ? <h4 className=" text-2xl text-center p-5">Não há clientes Cadastrados </h4>: <></>}
+      {!useItem.length ? <h4 className=" text-2xl text-center p-5">Não há fornecedores cadastrados </h4>: <></>}
     </section>
   )
 };

@@ -205,7 +205,7 @@ export default function Produtos() {
           </tbody>
         </table>
       </div>
-        {!useItem.length ? <p className="font-quicksand text-xl text-center my-3">Não há Produtos Cadastrados </p> : <></>}
+        {!useItem.length ? <p className="font-quicksand text-xl text-center my-3">Não há produtos cadastrados </p> : <></>}
     </section>
   )
 };
