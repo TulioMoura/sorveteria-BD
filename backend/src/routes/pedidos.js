@@ -6,6 +6,7 @@ const model_item_pedido = require("../models/item_pedido")
 
 const {v4:uuidv4}= require("uuid");
 const fornecimento = require("../models/fornecimento");
+const sequelize = require("../database/db")
 
 router.get('/',async(req,res)=>{
     try{
@@ -61,10 +62,12 @@ router.get('/por/produto',async(req,res)=>{
 router.post('/', async(req,res)=>{
     let pedido;
     try{
+
+        const transaction = await sequelize.transaction();
         const idPedido =  uuidv4()
        const {idCliente,itens} =  req.body
 
-       let pedido = await model_pedido.create({idCliente:idCliente,id:idPedido,valor_total:0})
+       let pedido = await model_pedido.create({idCliente:idCliente,id:idPedido,valor_total:0},{transaction:transaction})
        let valor_pedido = 0
 
        for(const item of itens){
@@ -75,14 +78,17 @@ router.post('/', async(req,res)=>{
         }
 
         valor = (produto.preco +(produto.preco*produto.lucro))* item.quantidade 
-        produto.Update({estoque:estoque-item.quantidade})
-       model_item_pedido.create({pedidoId:idPedido,produtoId:item.produtoId,quantidade:item.quantidade,valor: valor}) 
+        await model_produto.update({estoque:produto.estoque-item.quantidade},{where:{id:item.produtoId}},{transaction:transaction})
+       await model_item_pedido.create({pedidoId:idPedido,produtoId:item.produtoId,quantidade:item.quantidade,valor: valor},{transaction:transaction}) 
        valor_pedido = valor_pedido+ valor
 
        };
-       model_pedido.update({valor_total:valor_pedido}, {where:{id:idPedido}})
-      await
-        res.send(200)
+       console.log(idPedido + "  " + valor_pedido)
+       
+       await transaction.commit();
+       const result = await model_pedido.update({valor_total:valor_pedido}, {where:{id:idPedido}})
+       console.log(result)
+      await res.send(200)
     }
     catch(err){
         console.log(err)
