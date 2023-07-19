@@ -160,7 +160,7 @@ function formatData(d:string):string{
 
   return (
     <section className="container-fluid header bg-rv-pale min-h-screen ">
-      <h1 className="font-black font-DancingScript text-3xl text-center p-5">Clientes</h1>
+      <h1 className="font-black font-DancingScript text-3xl text-center p-5">Fornecimentos</h1>
       <div className="content-container flex justify-center items-center overflow-auto">
         <table className="w-full">
           <thead className="border-b-2 border-stone-500">
@@ -248,6 +248,7 @@ function formatData(d:string):string{
                 setNovoFornecimento(temp)
                 }} />}
               </td>
+              <td></td>
               
               <td className="flex justify-end">
                 <button className="customButton" onClick={async () => {
