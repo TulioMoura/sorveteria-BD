@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Fornecedores from "./Fornecedores";
 
 interface fornecimento {
   id:string,
@@ -47,7 +46,7 @@ export default function Fornecimentos() {
   const [useFornecedores, setFornecedores] = useState(fornecedores);
   const [useProdutos, setProdutos] = useState(produtos);
   const [useEdit, setEdit] = useState(false);
-  const [useNovoProduto, setNovoProduto] = useState<fornecimentoProto>({ produtoId: "", cnpjFornecedor: "", quantidade: 0,valorTotal :0 })
+  const [useNovoFornecimento, setNovoFornecimento] = useState<fornecimentoProto>({ produtoId: "", cnpjFornecedor: "", quantidade: 0,valorTotal :0 })
   useEffect(() => {
 
     fetch('http://127.0.0.1:4000/fornecimentos')
@@ -103,7 +102,7 @@ export default function Fornecimentos() {
       .catch(err => console.error(err));
   }
   //override
-  function HandleDelete(f: produto) {
+  function HandleDelete(f: fornecimento) {
     fetch('http://127.0.0.1:4000/fornecimentos',
       {
         method: "DELETE",
@@ -213,39 +212,53 @@ function formatData(d:string):string{
             )}
             <tr>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"TipoProduto"} className="px-2 rounded" type="text" placeholder="Tipo" onChange={(e) => {
-                  setNovoProduto({ tipo: e.target.value,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:useNovoProduto.lucro })
+                {<select id={"IdProduto"} className="px-2 rounded" placeholder="Tipo" onChange={(e) => {
+                    let temp = useNovoFornecimento;
+                    temp.produtoId =e.target.value 
+                  setNovoFornecimento(temp)
+                }}><option />
+                    {useProdutos.map((item:produto)=>
+                        <option key={item.id} value={item.id}>{nomeProduto(item)}</option>
+                        )}
+                </select>    
+                    }
+              </td>
+              <td className="font-quicksand py-2 m-1">
+                {<select id={"IdFornecedor"} className="px-2 rounded"placeholder="Sabor" onChange={(e) => {
+                    let temp = useNovoFornecimento;
+                    temp.cnpjFornecedor =e.target.value 
+                  setNovoFornecimento(temp)
+                }} ><option />
+                    {useFornecedores.map((item:fornecedor)=>
+                        <option key={item.cnpj} value={item.cnpj}>{item.nome}</option>
+                        )}
+                    </select>}
+              </td>
+              <td className="font-quicksand py-2 m-1">
+                {<input id={"QuantidadeFornecimento"} className="px-2 rounded" type="text"  onChange={(e) => {
+                  let temp = useNovoFornecimento;
+                  temp.quantidade = Number(e.target.value) 
+                setNovoFornecimento(temp)
                 }} />}
               </td>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"SaborProduto"} className="px-2 rounded" type="text" placeholder="Sabor" onChange={(e) => {
-                  setNovoProduto({tipo: useNovoProduto.tipo,sabor:e.target.value, preco: useNovoProduto.preco, lucro:useNovoProduto.lucro })
+                {<input id={"CustoFornecimento"} className="px-2 rounded" type="text" onChange={(e) => {
+                  let temp = useNovoFornecimento;
+                  temp.valorTotal = Number(e.target.value) 
+                setNovoFornecimento(temp)
                 }} />}
               </td>
-              <td className="font-quicksand py-2 m-1">
-                {<input id={"PrecoProduto"} className="px-2 rounded" type="text"  onChange={(e) => {
-                  setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: e.target.value, lucro:useNovoProduto.lucro })
-                }} />}
-              </td>
-              <td className="font-quicksand py-2 m-1">
-                {<input id={"LucroProduto"} className="px-2 rounded" type="text" onChange={(e) => {
-                  setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:e.target.value })
-                }} />}
-              </td>
-              <td></td>
+              
               <td className="flex justify-end">
                 <button className="customButton" onClick={async () => {
-                  const created = await HandleCreate(useNovoProduto)
+                    console.log(useNovoFornecimento)
+                  const created = await HandleCreate(useNovoFornecimento)
                   if(created){
-                    setNovoProduto({ tipo: "", sabor: "", preco: "",lucro:null })
-                    let inputTipo = (document.getElementById(`TipoProduto`) as HTMLInputElement);
-                    let inputSabor = (document.getElementById(`SaborProduto`) as HTMLInputElement);
-                    let inputPreco = (document.getElementById(`PrecoProduto`) as HTMLInputElement);
-                    let inputLucro = (document.getElementById(`LucroProduto`) as HTMLInputElement);
-                    inputTipo.value  = "";
-                    inputSabor.value = "";
+                    setNovoFornecimento({ produtoId: "", cnpjFornecedor: "", quantidade: 0,valorTotal :0 })
+                    let inputPreco = (document.getElementById(`CustoFornecimento`) as HTMLInputElement);
+                    let inputQuantidade = (document.getElementById(`QuantidadeFornecimento`) as HTMLInputElement);
                     inputPreco.value = "";
-                    inputLucro.value = "";
+                    inputQuantidade.value = "";
                   }
                 }}>
                   Criar!

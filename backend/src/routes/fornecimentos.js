@@ -42,8 +42,9 @@ router.get('/por/produto',async(req,res)=>{
 router.post('/', async(req,res)=>{
     let fornecimento;
     try{
+        const id = uuidv4();
        const {produtoId,cnpjFornecedor,quantidade,valorTotal} =  req.body
-      fornecimento = {produtoId,cnpjFornecedor,quantidade,valorTotal}
+      fornecimento = {produtoId,cnpjFornecedor,quantidade,valorTotal,id}
       if(quantidade<1 || !produtoId || !cnpjFornecedor || !valorTotal){
         throw new Error()
       }

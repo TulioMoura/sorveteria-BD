@@ -4,6 +4,11 @@ const Fornecedor = require("./fornecedor.js")
 const Produto = require("./produto.js")
 
 const fornecimento = sequelize.define('Fornecimento',{
+    id:{
+        type:DataTypes.STRING,
+        allowNull:false,
+        primaryKey:true
+    },
     produtoId:{
         type:DataTypes.STRING,
         references:{
