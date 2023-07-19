@@ -44,14 +44,17 @@ router.post('/', async(req,res)=>{
     try{
        const {produtoId,cnpjFornecedor,quantidade,valorTotal} =  req.body
       fornecimento = {produtoId,cnpjFornecedor,quantidade,valorTotal}
-      if(quantidade<1){
+      if(quantidade<1 || !produtoId || !cnpjFornecedor || !valorTotal){
         throw new Error()
       }
+      fornecimento.valorTotal = valorTotal.toString();
         await model_fornecimento.create(fornecimento)
         produto = await model_produto.findByPk(produtoId)
 
         await model_produto.update({estoque: (produto.estoque+quantidade)},{where:{id:produtoId}})
-        res.send(200)
+
+        fornecimento = await model_fornecimento.findByPk(id)
+        res.status(200).send(fornecimento)
     }
     catch(err){
         console.log(err)
@@ -63,7 +66,7 @@ router.post('/', async(req,res)=>{
 router.patch('/', async(req,res)=>{
   try{
      const {id,quantidade,valorTotal} =  req.body  
-     let fornecimento = model_fornecimento.findByPk(id)
+     let fornecimento = await model_fornecimento.findByPk(id)
      if(!fornecimento){
       throw new Error()
      }
@@ -71,7 +74,7 @@ router.patch('/', async(req,res)=>{
         throw new Error()
       }
       
-     model_fornecimento.update(
+     await model_fornecimento.update(
         {
             quantidade:quantidade,
             valorTotal:valorTotal},
@@ -82,7 +85,8 @@ router.patch('/', async(req,res)=>{
             model_produto.update({quantidade:quant_produto},{where:{id:fornecimento.produtoId}})
         }
         
-    res.send(200)
+        fornecimento = await model_fornecimento.findByPk(id)
+        res.status(200).send(fornecimento)
   }
   catch(err){
       console.log(err)
@@ -99,7 +103,8 @@ router.delete('/', async(req,res)=>{
      let produto = await model_produto.findByPk(fornecimento.produtoId)
      await model_produto.update({estoque:(produto.estoque - fornecimento.quantidade)},{where:{id:produto.id}})
     await model_fornecimento.destroy({where:{id:id}})
-    res.send(200)
+    fornecimento = await model_fornecimento.findByPk(id)
+        res.status(200).send(fornecimento)
   }
   catch(err){
       console.log(err)
