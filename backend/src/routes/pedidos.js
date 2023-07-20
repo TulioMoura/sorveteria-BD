@@ -86,9 +86,9 @@ router.post('/', async(req,res)=>{
        console.log(idPedido + "  " + valor_pedido)
        
        await transaction.commit();
-       const result = await model_pedido.update({valor_total:valor_pedido}, {where:{id:idPedido}})
-       console.log(result)
-      await res.send(200)
+        await model_pedido.update({valor_total:valor_pedido}, {where:{id:idPedido}})
+       pedido = await model_pedido.findByPk(idPedido)
+      await res.status(200).send(pedido)
     }
     catch(err){
         console.log(err)
@@ -132,9 +132,11 @@ router.post('/', async(req,res)=>{
 router.delete('/', async(req,res)=>{
   try{
      const {id} =  req.body  
+     let pedido = model_pedido.findByPk(id)
      await model_item_pedido.destroy({where:{pedidoId:id}} )
      await model_pedido.destroy({where:{id:id}})
-    res.send(200)
+     
+    res.status(200).send(pedido)
   }
   catch(err){
       console.log(err)
