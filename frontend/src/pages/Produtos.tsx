@@ -23,7 +23,10 @@ export default function Produtos() {
   let produtos: produto[] = [];
   const [useItem, setItem] = useState(produtos);
   const [useEdit, setEdit] = useState(false);
-  const [useNovoProduto, setNovoProduto] = useState<produtoProto>({ tipo: "", sabor: "", preco: "",lucro:null })
+  const [useNovoProduto, setNovoProduto] = useState<produtoProto>(
+    { tipo: "", sabor: "", preco: "",lucro:null });
+
+
   useEffect(() => {
 
     fetch('http://127.0.0.1:4000/produtos')
@@ -78,7 +81,7 @@ export default function Produtos() {
       .then(itemProduto => {
         let listaProdutos: produto[] = useItem;
         listaProdutos = listaProdutos.filter((item: produto) => itemProduto.id !== item.id)
-        setItem(listaProdutos)
+        setItem(listaProdutos);
       })
       .catch(err => console.error(err));
   }
@@ -86,7 +89,7 @@ export default function Produtos() {
   async function HandleCreate(pProto: produtoProto): Promise<boolean> {
     let created = false;
     try {
-        console.log(pProto)
+        console.log(pProto);
       const req = await fetch('http://127.0.0.1:4000/produtos',
       
         {
@@ -95,9 +98,9 @@ export default function Produtos() {
           headers: { "Content-Type": "application/json" }
         }
       )
-      const itemProduto = await req.json()
-      setItem([...useItem, itemProduto])
-      created = (!!itemProduto)
+      const itemProduto = await req.json();
+      setItem([...useItem, itemProduto]);
+      created = (!!itemProduto);
 
 
     }
@@ -137,10 +140,10 @@ export default function Produtos() {
                   {!useEdit ? p.sabor : <input className="px-2 rounded" id={p.id + "-sabor"} type="text" defaultValue={p.sabor} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? p.preco : <input className="px-2 rounded" id={p.id + "-preco"} type="text" defaultValue={p.preco} />}
+                  {!useEdit ? p.preco : <input className="px-2 rounded" id={p.id + "-preco"} type="number" defaultValue={p.preco} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? p.lucro : <input className="px-2 rounded" id={p.id + "-lucro"} type="text" defaultValue={p.lucro} />}
+                  {!useEdit ? p.lucro : <input className="px-2 rounded" id={p.id + "-lucro"} type="number" defaultValue={p.lucro} />}
                 </td>
                 <td className="font-quicksand py-2 m-1 ">
                     {p.estoque}
@@ -173,12 +176,12 @@ export default function Produtos() {
                 }} />}
               </td>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"PrecoProduto"} className="px-2 rounded" type="text"  onChange={(e) => {
+                {<input id={"PrecoProduto"} className="px-2 rounded" type="number"  onChange={(e) => {
                   setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: e.target.value, lucro:useNovoProduto.lucro })
                 }} />}
               </td>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"LucroProduto"} className="px-2 rounded" type="text" onChange={(e) => {
+                {<input id={"LucroProduto"} className="px-2 rounded" type="number" onChange={(e) => {
                   setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:e.target.value })
                 }} />}
               </td>
