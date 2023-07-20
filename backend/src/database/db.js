@@ -7,7 +7,7 @@ sequelize.query(`CREATE OR REPLACE PROCEDURE resetLucro()
 
 as $$
 	BEGIN
-	update Produtos
+	update "Produtos"
 	set lucro = 0.15;
 END;
 $$ 

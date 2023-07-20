@@ -70,6 +70,22 @@ export default function Produtos() {
       .catch(err => console.error(err));
   }
 
+async  function resetLucro(){
+    try{ await fetch('http://127.0.0.1:4000/produtos/resetlucro',
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      }
+    )
+    let  response = await  fetch('http://127.0.0.1:4000/produtos')
+    setItem(await response.json())
+    
+  }
+    catch(err){
+      console.log(err)
+  }
+}
+
   function HandleDelete(p: produto) {
     fetch('http://127.0.0.1:4000/produtos',
       {
@@ -185,7 +201,12 @@ export default function Produtos() {
                   setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:e.target.value })
                 }} />}
               </td>
-              <td></td>
+              <td className="flex justify-end"><button className="customButton" onClick={async () =>{
+                  await resetLucro()
+              }}>
+                Reset Lucro
+                </button>
+              </td>
               <td className="flex justify-end">
                 <button className="customButton" onClick={async () => {
                   const created = await HandleCreate(useNovoProduto)
@@ -211,4 +232,4 @@ export default function Produtos() {
         {!useItem.length ? <p className="font-quicksand text-xl text-center my-3">Não há produtos cadastrados </p> : <></>}
     </section>
   )
-};
+}

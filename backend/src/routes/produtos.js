@@ -3,6 +3,7 @@ const router = express.Router()
 const model_produto = require("../models/produto");
 const {v4:uuidv4}= require("uuid");
 const cliente = require("../models/cliente");
+const sequelize = require("../database/db.js")
 
 router.get('/',async(req,res)=>{
 
@@ -51,10 +52,11 @@ router.post('/', async(req,res)=>{
 router.post('/resetlucro', async(req, res)=>{
     try{
         await sequelize.query('CALL resetLucro()')
-        req.status(200).send({})
+        res.status(200).send({})
     }
     catch(err){
-        req.status(500).body({"Error":"Erro interno do servidor!"})
+        console.log(err)
+        res.status(500).send({"Error":"Erro interno do servidor!"})
     }
 
 })
