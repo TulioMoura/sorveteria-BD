@@ -1,0 +1,11 @@
+.accordion{
+  @apply bg-rv-pale cursor-pointer w-full text-left transition-all;
+}
+
+.expanded{
+  @apply bg-rv-secondary;
+}
+
+.panel{
+  @apply px-5 bg-rv-pale max-h-0 overflow-hidden transition-all;
+}
