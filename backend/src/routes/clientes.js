@@ -5,7 +5,9 @@ const {v4:uuidv4}= require("uuid")
 
 router.get('/',async(req,res)=>{
   try{
-    const {id} = req.body
+    const id = req.query.id
+        console.log(req)
+        
     if(!id){
       let clientList = await model_cliente.findAll();
       res.send(clientList)

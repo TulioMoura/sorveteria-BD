@@ -48,7 +48,16 @@ router.post('/', async(req,res)=>{
     }
     
 })
+router.post('/resetlucro', async(req, res)=>{
+    try{
+        await sequelize.query('CALL resetLucro()')
+        req.status(200).send({})
+    }
+    catch(err){
+        req.status(500).body({"Error":"Erro interno do servidor!"})
+    }
 
+})
 router.patch('/', async(req,res)=>{
   try{
      const {sabor,preco,tipo,id,lucro}  =  req.body 

@@ -10,7 +10,8 @@ const sequelize = require("../database/db")
 
 router.get('/',async(req,res)=>{
     try{
-        const {id} = req.body
+        const id = req.query.id
+        console.log(req)
         if(!id){
             let pedidosList = await model_pedido.findAll();
             res.send(pedidosList)
