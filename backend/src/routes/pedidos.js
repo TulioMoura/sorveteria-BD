@@ -73,8 +73,9 @@ router.post('/', async(req,res)=>{
        for(const item of itens){
         produto = await model_produto.findByPk(item.produtoId)
 
-        if(produto.estoque < item.quantidade){
-            continue;
+        if(produto.estoque < item.quantidade || !produto){
+             transaction.rollback();
+             throw new Error();
         }
 
         valor = (produto.preco +(produto.preco*produto.lucro))* item.quantidade 
