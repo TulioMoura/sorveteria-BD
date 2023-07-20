@@ -11,7 +11,6 @@ const sequelize = require("../database/db")
 router.get('/',async(req,res)=>{
     try{
         const id = req.query.id
-        console.log(req)
         if(!id){
             let pedidosList = await model_pedido.findAll();
             res.send(pedidosList)
@@ -134,10 +133,10 @@ router.post('/', async(req,res)=>{
 router.delete('/', async(req,res)=>{
   try{
      const {id} =  req.body  
-     let pedido = model_pedido.findByPk(id)
+     let pedido = await model_pedido.findByPk(id)
      await model_item_pedido.destroy({where:{pedidoId:id}} )
      await model_pedido.destroy({where:{id:id}})
-     
+     console.log(pedido)
     res.status(200).send(pedido)
   }
   catch(err){
