@@ -8,7 +8,7 @@ const sequelize = require("../database/db.js")
 router.get('/',async(req,res)=>{
 
     try{
-        const {id} = req.body
+        const id = req.query.id
         if(!id){
             let lista_produtos = await model_produto.findAll();
             res.send(lista_produtos)

@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-interface Item {}
+
+  interface Item {
+    produtoId: string;
+    quantidade: number;
+    valor: number;
+  }
+
 
 interface Pedido {
   id: string;
   idCliente: string;
   nomeCliente?: string;
-  valorTotal?: string;
+  valor_total?: Number;
   itens: Item[];
 }
 
@@ -15,12 +21,50 @@ interface props {
   pedido: Pedido;
 }
 
+interface produto {
+  tipo: string,
+  sabor: string,
+  estoque: number,
+  preco: number,
+  lucro: number,
+  id: string,
+  createdAt: string,
+  updatedAt: string
+}
+
 let isOpen: boolean;
 
-export default function Pedido(p: props) {
-  const [useInfo, setInfo] = useState(p.pedido);
-  const [useEdit, setEdit] = useState(false);
+function nomeProduto(p:produto| undefined):string{
+  if(!p){
+    console.log(p);
+      return "*"
+      
+  }
+  else{
+      return p.tipo +" / "+p.sabor;
+  }
+}
 
+export default function Pedido(p:props) {
+
+  
+
+  const produtos:produto[] = [];
+  const pedido: Pedido = (p.pedido)
+  const lista:Item[] =[];
+  const [useInfo, setInfo] = useState(pedido);
+  const [useEdit, setEdit] = useState(false);
+  const [useLista,setLista] = useState(lista)
+  
+  const [useProdutos, setProdutos] = useState(produtos);
+useEffect(() => {
+
+    fetch('http://127.0.0.1:4000/produtos')
+      .then(response => response.json())
+      .then(response => setProdutos(response))
+      .catch(err => console.error(err));
+
+  }, produtos);
   async function handleExpand(e: HTMLButtonElement) {
 
     e.classList.toggle("expanded");
@@ -37,22 +81,25 @@ export default function Pedido(p: props) {
 
       let cliente: any;
       let pedido: Pedido;
+      let itens: Item[];
       await fetch(`http://127.0.0.1:4000/clientes?id=${p.pedido.idCliente}`)
         .then((response) => response.json())
         .then((response) => (cliente = response))
         .catch((err) => console.error(err));
 
-      await fetch("http://localhost:4000/pedidos/")
+      await fetch(`http://localhost:4000/pedidos?id=${p.pedido.id}`)
         .then((response) => response.json())
-        .then((response) => (pedido = response))
+        .then((response) => ({pedido,itens} = response))
         .then(() => {
           setInfo({
-            id: p.pedido.id,
-            idCliente: p.pedido.idCliente,
+            id: pedido.id,
+            idCliente: pedido.idCliente,
             nomeCliente: cliente.nome,
-            valorTotal: pedido.valorTotal,
-            itens: pedido.itens,
+            valor_total: pedido.valor_total,
+            itens: itens,
           });
+          setLista(itens)
+          console.log(useInfo)
         })
         .catch((err) => console.error(err));
     }else{
@@ -69,15 +116,38 @@ export default function Pedido(p: props) {
         Pedido n° {p.counter}
       </button>
 
-      <div className="panel flex flex-col">
-        <div>
-          <p>ID do cliente: {useInfo.idCliente}</p>
-          <p>ID do Pedido: {useInfo.id}</p>
-          <p>Nome do Cliente: {useInfo.nomeCliente}</p>
-          <p>Itens: </p>
-          <ul>{}</ul>
+      <div className="panel flex flex-row justify-between">
+        <div className="flex flex-col justify-around font-semibold ">
+          <p>Cliente: {useInfo.nomeCliente}</p>
+          <p>Valor Total: R${useInfo.valor_total?.toString()}</p>
+          </div>
+          <div>
+          <table className="w-full ">
+            <thead> 
+              <tr className="border-b-2 border-stone-500 border-dotted">
+                <th className="font-quicksand text-left px-2">Produto</th> 
+                <th className="font-quicksand text-left px-2 ">Quantidade:</th>
+                 <th className="font-quicksand text-left px-2">Preço do Item:</th>
+              </tr>
+            </thead>
+          <tbody>
+
+          
+          
+            {useLista.map((item:Item) => 
+              <tr id={item.produtoId + useInfo.id}>
+                <td id={item.produtoId + useInfo.id+"nomeproduto"} className="font-quicksand py-2 m-1 text-center">
+                   {nomeProduto(useProdutos.find((p:produto)=> p.id === item.produtoId))}</td>
+                <td id={item.produtoId + useInfo.id+"quantidadeProduto"} className="font-quicksand py-2 m-1 text-center">{(item.quantidade*1000).toString()}(g)</td>
+                <td id={item.produtoId + useInfo.id+"valorItem"} className="font-quicksand py-2 m-1 text-center"> R${item.valor.toString()} </td>
+              </tr>
+              
+          )}
+          </tbody>
+          </table>
+          </div>
+          
         </div>
       </div>
-    </div>
   );
 }

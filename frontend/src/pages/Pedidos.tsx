@@ -5,16 +5,16 @@ import Pedido from "../components/global/Pedido";
 
 interface ItemProto {
   produtoId: string;
-  quantidade: Number;
+  quantidade: number;
 }
 
 interface Item {
   produtoId: string;
-  quantidade: Number;
-  valor: Number;
+  quantidade: number;
+  valor: number;
 }
 interface pedido {
-  valor_total: Number;
+  valor_total: number;
   id: string;
   idCliente: string;
   itens: Item[];
@@ -178,8 +178,8 @@ export default function Pedidos() {
           )}
         </select>
         <div className="px-2 rounded">
-          <input id="qtdProduto" className="px-2 rounded" placeholder="Quantidade" type="text" onChange={(e)=>{
-            currentItem.quantidade = Number(e.target.value)
+          <input id="qtdProduto" className="px-2 rounded" placeholder="Quantidade(gramas)" type="text" onChange={(e)=>{
+            currentItem.quantidade = Number( e.target.value )/1000
         }}/>
         </div>
         
@@ -214,7 +214,7 @@ export default function Pedidos() {
           {useItemList.map((item:ItemProto) =>
             <tr id={item.produtoId }>
               <td className="font-quicksand py-2 m-1" id = {item.produtoId + "-nome-produto"}>{ nomeProduto(useProdutos.find((i:produto) => item.produtoId === i.id)) }</td>
-              <td className="font-quicksand py-2 m-1" id= {item.produtoId +"qtd-produto"}> <>{item.quantidade}</></td>
+              <td className="font-quicksand py-2 m-1" id= {item.produtoId +"qtd-produto"}> <>{(item.quantidade*1000)}</></td>
             </tr>
           )}
         </tbody>
@@ -236,6 +236,7 @@ export default function Pedidos() {
           const created = await HandleCreate(useNovoPedido)
           if (created) {
             setNovoPedido({ idCliente: "", itens: [] })
+            setItemList(listaItems);
           }
         }}>
           Criar pedido!
@@ -253,7 +254,7 @@ export default function Pedidos() {
               <li key={p.id} className="flex py-5">
                 <Pedido pedido={p} counter={counter} />
                 <button
-                  className="customButton"
+                  className="customButton  h-14  px-5"
                   onClick={() => handleDelete(p)}
                 >
                   Delete

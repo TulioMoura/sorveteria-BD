@@ -41,7 +41,7 @@ export default function Produtos() {
     const newTipo = (document.getElementById(`${p.id}-tipo`) as HTMLInputElement).value;
     const newSabor = (document.getElementById(`${p.id}-sabor`) as HTMLInputElement).value;
     const newPreco = Number((document.getElementById(`${p.id}-preco`) as HTMLInputElement).value);
-    const newLucro = Number((document.getElementById(`${p.id}-lucro`) as HTMLInputElement).value);
+    const newLucro = Number((document.getElementById(`${p.id}-lucro`) as HTMLInputElement).value)/100;
 
     setEdit(false);
 
@@ -156,10 +156,10 @@ async  function resetLucro(){
                   {!useEdit ? p.sabor : <input className="px-2 rounded" id={p.id + "-sabor"} type="text" defaultValue={p.sabor} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? p.preco : <input className="px-2 rounded" id={p.id + "-preco"} type="number" defaultValue={p.preco} />}
+                  {!useEdit ? "R$"+p.preco : <input className="px-2 rounded" id={p.id + "-preco"} type="number" defaultValue={p.preco} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? p.lucro : <input className="px-2 rounded" id={p.id + "-lucro"} type="number" defaultValue={p.lucro} />}
+                  {!useEdit ? (p.lucro*100)+"%" : <input className="px-2 rounded" id={p.id + "-lucro"} type="number" defaultValue={p.lucro*100} />}
                 </td>
                 <td className="font-quicksand py-2 m-1 ">
                     {p.estoque}
@@ -198,14 +198,9 @@ async  function resetLucro(){
               </td>
               <td className="font-quicksand py-2 m-1">
                 {<input id={"LucroProduto"} className="px-2 rounded" type="number" onChange={(e) => {
-                  setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:e.target.value })
+                  let lucro = Number(e.target.value)*100;
+                  setNovoProduto({tipo: useNovoProduto.tipo,sabor:useNovoProduto.sabor, preco: useNovoProduto.preco, lucro:lucro.toString() })
                 }} />}
-              </td>
-              <td className="flex justify-end"><button className="customButton" onClick={async () =>{
-                  await resetLucro()
-              }}>
-                Reset Lucro
-                </button>
               </td>
               <td className="flex justify-end">
                 <button className="customButton" onClick={async () => {
@@ -223,6 +218,11 @@ async  function resetLucro(){
                   }
                 }}>
                   Criar!
+                </button>
+                <button className="customButton" onClick={async () =>{
+                  await resetLucro()
+              }}>
+                Reset Lucro
                 </button>
               </td>
             </tr>

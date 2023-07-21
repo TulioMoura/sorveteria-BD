@@ -185,10 +185,10 @@ function formatData(d:string):string{
                 </td>
                 
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? f.quantidade : <input className="px-2 rounded" id={f.id + "-quantidade"} type="text" defaultValue={f.quantidade} />}
+                  {!useEdit ? f.quantidade + "kg" : <input className="px-2 rounded" id={f.id + "-quantidade"} type="text" defaultValue={f.quantidade} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
-                  {!useEdit ? f.valorTotal : <input className="px-2 rounded" id={f.id + "-custo"} type="text" defaultValue={f.valorTotal} />}
+                  {!useEdit ? "R$"+f.valorTotal : <input className="px-2 rounded" id={f.id + "-custo"} type="text" defaultValue={f.valorTotal} />}
                 </td>
                 <td className="font-quicksand py-2 m-1">
                   {formatData(f.createdAt)}
@@ -235,14 +235,14 @@ function formatData(d:string):string{
                     </select>}
               </td>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"QuantidadeFornecimento"} className="px-2 rounded" type="text"  onChange={(e) => {
+                {<input id={"QuantidadeFornecimento"} className="px-2 rounded" type="text"  placeholder="Quantidade" onChange={(e) => {
                   let temp = useNovoFornecimento;
                   temp.quantidade = Number(e.target.value) 
                 setNovoFornecimento(temp)
                 }} />}
               </td>
               <td className="font-quicksand py-2 m-1">
-                {<input id={"CustoFornecimento"} className="px-2 rounded" type="text" onChange={(e) => {
+                {<input id={"CustoFornecimento"} className="px-2 rounded" type="text" placeholder="Custo" onChange={(e) => {
                   let temp = useNovoFornecimento;
                   temp.valorTotal = Number(e.target.value) 
                 setNovoFornecimento(temp)
