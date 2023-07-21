@@ -53,7 +53,6 @@ export default function Pedido(p:props) {
   const pedido: Pedido = (p.pedido)
   const lista:Item[] =[];
   const [useInfo, setInfo] = useState(pedido);
-  const [useEdit, setEdit] = useState(false);
   const [useLista,setLista] = useState(lista)
   
   const [useProdutos, setProdutos] = useState(produtos);
@@ -110,7 +109,7 @@ useEffect(() => {
   return (
     <div key={p.pedido.id} className="w-full justify-between">
       <button
-        className="accordion py-5 px-5 rounded hover:bg-rv-secondary"
+        className="accordion py-5 px-5 rounded hover:bg-rv-secondary "
         onClick={(e) => handleExpand(e.currentTarget)}
       >
         Pedido n° {p.counter}

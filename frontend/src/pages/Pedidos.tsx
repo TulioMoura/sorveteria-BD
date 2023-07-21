@@ -66,7 +66,6 @@ export default function Pedidos() {
   let pedidoProtoItem: pedidoProto = {idCliente: "", itens : []};
 
   const [useItem, setItem] = useState(pedidos);
-  const [useEdit, setEdit] = useState(false);
   const [useProdutos, setProdutos] = useState(produtos);
   const [useClientes, setClientes] = useState(clientes);
   const [useNovoPedido, setNovoPedido] = useState(pedidoProtoItem)
